@@ -2,9 +2,9 @@ import tkinter as tk
 
 class Component:
     def set(self, property, value):
-        self.conponent[property] = value
+        self.component[property] = value
 
-    def set_place(self, x, y, anchor="nw", **kwargs):
+    def place(self, x, y, anchor="nw", **kwargs):
         """Place a widget in the parent widget. Use as options:
         in=master - master relative to which the widget is placed
         in_=master - see 'in' option description
@@ -26,7 +26,7 @@ class Component:
         bordermode="inside" or "outside" - whether to take border width of
                                            master widget into account
         """
-        self.conponent.place(x=x, y=y, anchor=anchor)
+        self.component.place(x=x, y=y, anchor=anchor)
 
     def pack(self, **kwargs):
         """Pack a widget in the parent widget. Use as options:
@@ -44,13 +44,60 @@ class Component:
         pady=amount - add padding in y direction
         side=TOP or BOTTOM or LEFT or RIGHT -  where to add this widget.
         """
-        self.conponent.pack(**kwargs)
+        self.component.pack(**kwargs)
 
-class Panel(Component):
+class Indicator(Component):
     def __init__(self, window, text=None, **kwargs):
+        """Construct a label widget with the parent MASTER.
+        STANDARD OPTIONS
+            activebackground, activeforeground, anchor,
+            background, bitmap, borderwidth, cursor,
+            disabledforeground, font, foreground,
+            highlightbackground, highlightcolor,
+            highlightthickness, image, justify,
+            padx, pady, relief, takefocus, text,
+            textvariable, underline, wraplength
+        WIDGET-SPECIFIC OPTIONS
+            height, state, width
+        """
         self.var = tk.StringVar(value=text)
-        self.conponent = tk.Label(window, textvariable=self.var, bg="red", font=("Arial", 12), width=15, height=3)
-        self.pack(**kwargs)
+        self.component = tk.Label(window, textvariable=self.var, **kwargs)
 
     def set_text(self, text):
         self.var.set(text)
+
+class Button(Component):
+    def __init__(self, window, **kwargs):
+        """Construct a button widget with the parent MASTER.
+        STANDARD OPTIONS
+            activebackground, activeforeground, anchor,
+            background, bitmap, borderwidth, cursor,
+            disabledforeground, font, foreground
+            highlightbackground, highlightcolor,
+            highlightthickness, image, justify,
+            padx, pady, relief, repeatdelay,
+            repeatinterval, takefocus, text,
+            textvariable, underline, wraplength
+        WIDGET-SPECIFIC OPTIONS
+            command, compound, default, height,
+            overrelief, state, width
+        """
+        self.component = tk.Button(window, **kwargs)
+
+class Entry(Component):
+    def __init__(self, window, **kwargs):
+        self.component = tk.Entry(window, **kwargs)
+
+    def get(self):
+        return self.component.get()
+
+class Text(Component):
+    def __init__(self, window, **kwargs):
+        self.component = tk.Text(window, **kwargs)
+
+    def get(self, index1=0.0, index2=None):
+        return self.component.get(index1, index2)
+
+    def insert(self, index=0.0):
+        pass
+    
