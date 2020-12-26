@@ -9,9 +9,9 @@ class UserInterface:
         self.panel.pack()
         self.panel.place(x=200, y=80, anchor="n")
 
-        self.entry = Text(self.window, width=20, height=2)
-        self.entry.pack()
-        self.entry.place(x=200, y=160, anchor="n")
+        self.text = Text(self.window, width=20, height=2)
+        self.text.pack()
+        self.text.place(x=200, y=160, anchor="n")
         
         self.button = Button(self.window, text="Ok", width=10, height=2)
         self.button.set("command", self.click_button)
@@ -30,7 +30,7 @@ class UserInterface:
         return window
 
     def click_button(self):
-        self.panel.set_text(self.entry.get(0.0, "end"))
+        self.panel.set_text(self.text.get(0.0, "end"))
         pass
 
     def quit(self):
