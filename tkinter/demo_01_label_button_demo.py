@@ -1,37 +1,23 @@
 import tkinter as tk
-
-class Button:
-    def __init__(self, window, text="Ok", width=10, height=2):
-        self.button = tk.Button(window, text=text, width=width, height=height)
-        self.button.pack()
-
-    def set_click_motion(self, fn):
-        self.button["command"] = fn
-
-    def set_place(self, x, y, anchor="nw"):
-        self.button.place(x=x, y=y, anchor=anchor)
-
-class Panel:
-    def __init__(self, window):
-        self.var = tk.StringVar()
-        self.panel = tk.Label(window, textvariable=self.var, bg="red", font=("Arial", 12), width=15, height=3)
-        self.panel.pack()
-
-    def set_text(self, text):
-        self.var.set(text)
-
-    def set_bg_color(self, color):
-        self.panel["bg"] = color
-
-    def set_place(self, x, y, anchor="nw"):
-        self.panel.place(x=x, y=y, anchor=anchor)
+from component import Indicator, Button
 
 class UserInterface:
     def __init__(self):
         self.window = self.build_window()
-        self.panel = Panel(self.window)
-        self.button = Button(self.window)
-        self.button.set_click_motion(self.click_button())
+
+        self.panel = Indicator(self.window, bg="red", font=("Arial", 12), width=30, height=3)
+        self.panel.pack()
+        self.panel.place(x=200, y=80, anchor="n")
+        
+        self.button = Button(self.window, text="Ok", width=10, height=2)
+        self.button.set("command", self.click_button())
+        self.button.pack()
+        self.button.place(x=20, y=280, anchor="sw")
+
+        self.quit_button = Button(self.window, text="Quit", width=10, height=2)
+        self.quit_button.set("command", self.quit)
+        self.quit_button.pack()
+        self.quit_button.place(x=380, y=280, anchor="se")
 
     def build_window(self):
         window = tk.Tk()
@@ -45,13 +31,17 @@ class UserInterface:
             nonlocal status
             if not status:
                 self.panel.set_text("hello world!")
-                self.panel.set_bg_color("green")
+                self.panel.set("bg", "green")
             else:
                 self.panel.set_text("")
-                self.panel.set_bg_color("red")
+                self.panel.set("bg", "red")
             status = not status
             return
         return fn
+
+    def quit(self):
+        self.window.quit()
+        return
 
     def run(self):
         self.window.mainloop()
