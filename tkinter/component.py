@@ -98,6 +98,28 @@ class Text(Component):
     def get(self, index1=0.0, index2=None):
         return self.component.get(index1, index2)
 
-    def insert(self, index=0.0):
-        pass
+class Listbox(Component):
+    def __init__(self, window, vars, **kwargs):
+        self.var = tk.StringVar()
+        self.var.set(vars)
+        self.component = tk.Listbox(window, listvariable=self.var, **kwargs)
+
+    def insert(self, idx, item):
+        self.component.insert(idx, item)
+
+    def delete(self, idx):
+        self.component.delete(idx)
+
+class Optionmenu(Component):
+    def __init__(self, window, optionList, **kwargs):
+        self.var = tk.StringVar()
+        self.component = tk.OptionMenu(window, self.var, *optionList, **kwargs)
+
+class Message(Component):
+    def __init__(self, window, text=None, **kwargs):
+        self.var = tk.StringVar(value=text)
+        self.component = tk.Message(window, textvariable=self.var, **kwargs)
+
+    def set_text(self, text):
+        self.var.set(text)
     
