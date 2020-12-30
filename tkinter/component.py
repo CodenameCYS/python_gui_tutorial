@@ -115,6 +115,9 @@ class Optionmenu(Component):
         self.var = tk.StringVar()
         self.component = tk.OptionMenu(window, self.var, *optionList, **kwargs)
 
+    def get(self):
+        return self.var.get()
+
 class Message(Component):
     def __init__(self, window, text=None, **kwargs):
         self.var = tk.StringVar(value=text)
