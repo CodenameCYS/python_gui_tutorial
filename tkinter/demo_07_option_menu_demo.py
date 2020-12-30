@@ -30,7 +30,7 @@ class UserInterface:
         return window
 
     def click_button(self):
-        selection = self.optionmenu.component.get()
+        selection = self.optionmenu.get()
         self.panel.set_text(f"your choice is {selection}")
         return
 
